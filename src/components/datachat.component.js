@@ -33,12 +33,12 @@ const start = (localId, remoteId) => {
     });
 
     connection = peer.connect(remoteId);
-    
 
-    peer.on('connection', function(conn) {
-        conn.on('data', function(data) {
+
+    peer.on('connection', function(connection) {
+        connection.on('data', function(data) {
             console.log('Received', data);
-        });
+    });
     
     });
 
@@ -100,4 +100,5 @@ function DataChat()  {
         </div>
     )
 }
+
 export default DataChat
