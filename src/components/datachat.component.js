@@ -57,6 +57,7 @@ function DataChat()  {
     const [hangupAvailable, setHangup] = React.useState(false)
     const [localId, setLocalId] = React.useState(0);
     const [remoteId, setRemoteId] = React.useState(0);
+    const [message, setMessage] = React.useState(0);
 
 
     return (
@@ -66,22 +67,26 @@ function DataChat()  {
         // Et une Grid plutôt que des div pour la mise en page
         <div className={classes.root}>
             <Grid container spacing={3}>       
-                <Grid item xs={4}>
+                <Grid item xs={3}>
                     <form className={classes.root} noValidate autoComplete="off">
                         <TextField id="standard-basic" label="Local id" onChange={(event) => setLocalId(event.target.value)} /> <br/>
                         <Button onClick={start}>Start</Button>
                         {/* <Button onClick={start.send}>Send</Button> */}
                     </form>
                 </Grid>     
-                <Grid item xs={4}>
+                <Grid item xs={3}>
                     <form className={classes.root} noValidate autoComplete="off">
                         <TextField id="standard-basic" label="Remote chat id" onChange={(event) => setRemoteId(event.target.value)} /> <br/>
                         <Button>Call</Button>
                     </form>
                 </Grid>     
-                <Grid item xs={4}>
+                <Grid item xs={3}>
                     <Button>Hang up</Button>
-                </Grid>     
+                </Grid>  
+                <Grid>
+                <TextField id="standard-basic" label="Message" onChange={(event) => setMessage(event.target.value)} /> <br/>
+                    <Button onClick={start.send}>Send</Button>
+                </Grid>   
                 <Grid item xs={12}>
                     <textarea></textarea>
                 </Grid>
