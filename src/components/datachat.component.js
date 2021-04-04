@@ -70,7 +70,7 @@ function DataChat()  {
                 <Grid item xs={3}>
                     <form className={classes.root} noValidate autoComplete="off">
                         <TextField id="standard-basic" label="Local id" onChange={(event) => setLocalId(event.target.value)} /> <br/>
-                        <Button onClick={start}>Start</Button>
+                        <Button onClick={start(this.state.localId, this.state.remoteId)}>Start</Button>
                         {/* <Button onClick={start.send}>Send</Button> */}
                     </form>
                 </Grid>     
