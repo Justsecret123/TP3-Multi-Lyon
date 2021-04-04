@@ -17,10 +17,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let peer;
+let connection;
 
 const start = (localId, remoteId) => {
     
-    const peer = new Peer(localId, {
+    peer = new Peer(localId, {
         host: 'localhost',
         port: 3000,
         path: '/mypeer'
@@ -30,34 +32,39 @@ const start = (localId, remoteId) => {
         console.log('My peer ID is: ' + localId);
     });
 
-    var conn = peer.connect(remoteId);
+    connection = peer.connect(remoteId);
+    
 
-    conn.on('open', function() {
-
-        // Send messages
-        const send = (text) => {
-            conn.send(text);
-        }
-
-        // Receive messages
+    peer.on('connection', function(conn) {
         conn.on('data', function(data) {
             console.log('Received', data);
         });
-
+    
     });
 
 }
 
 function DataChat()  {
 
-    const classes = useStyles();
-
+    //State
     const [startAvailable, setStart] = React.useState(true)
     const [sendAvailable, setSend] = React.useState(false)
     const [hangupAvailable, setHangup] = React.useState(false)
     const [localId, setLocalId] = React.useState(0);
     const [remoteId, setRemoteId] = React.useState(0);
     const [message, setMessage] = React.useState(0);
+
+    //Logic
+    const initStart = () => {
+        console.log("start ", localId, remoteId);
+        start(localId, remoteId);
+    };
+
+    const send = () => {
+        connection.send(message);
+    }
+
+    const classes = useStyles();
 
 
     return (
@@ -70,8 +77,7 @@ function DataChat()  {
                 <Grid item xs={3}>
                     <form className={classes.root} noValidate autoComplete="off">
                         <TextField id="standard-basic" label="Local id" onChange={(event) => setLocalId(event.target.value)} /> <br/>
-                        <Button onClick={start(this.state.localId, this.state.remoteId)}>Start</Button>
-                        {/* <Button onClick={start.send}>Send</Button> */}
+                        <Button onClick={initStart}>Start</Button>
                     </form>
                 </Grid>     
                 <Grid item xs={3}>
@@ -85,7 +91,7 @@ function DataChat()  {
                 </Grid>  
                 <Grid>
                 <TextField id="standard-basic" label="Message" onChange={(event) => setMessage(event.target.value)} /> <br/>
-                    <Button onClick={start.send}>Send</Button>
+                    <Button onClick={send}>Send</Button>
                 </Grid>   
                 <Grid item xs={12}>
                     <textarea></textarea>
