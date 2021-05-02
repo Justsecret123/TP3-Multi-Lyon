@@ -63,6 +63,7 @@ function DataChat()  {
         start(localId, remoteId);
     };
 
+    //Send avec ajout d'en-tête
     const send = () => {
         connection.send(localId + ": " + message + "\n");
         setMessages([...messages, localId + ": " + message]);
@@ -71,6 +72,7 @@ function DataChat()  {
     }
 
     const classes = useStyles();
+
 
 
     return (
