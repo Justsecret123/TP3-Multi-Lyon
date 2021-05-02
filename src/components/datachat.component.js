@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -38,7 +38,9 @@ const start = (localId, remoteId) => {
     peer.on('connection', function(connection) {
         connection.on('data', function(data) {
             console.log('Received', data);
-    });
+            let chat = document.getElementById("chat"); 
+            chat.value = [chat.value + "\n" +  data + "\n"];
+        });
     
     });
 
@@ -53,6 +55,7 @@ function DataChat()  {
     const [localId, setLocalId] = React.useState(0);
     const [remoteId, setRemoteId] = React.useState(0);
     const [message, setMessage] = React.useState(0);
+    const [messages, setMessages] = React.useState("");
 
     //Logic
     const initStart = () => {
@@ -61,7 +64,10 @@ function DataChat()  {
     };
 
     const send = () => {
-        connection.send(message);
+        connection.send(localId + ": " + message + "\n");
+        setMessages([...messages, localId + ": " + message]);
+        let chat = document.getElementById("chat"); 
+        chat.value = [chat.value + "\n" + localId + ": " + message  + "\n"];
     }
 
     const classes = useStyles();
@@ -94,7 +100,7 @@ function DataChat()  {
                     <Button onClick={send}>Send</Button>
                 </Grid>   
                 <Grid item xs={12}>
-                    <textarea></textarea>
+                    <textarea id={"chat"} readOnly/> 
                 </Grid>
           </Grid>
         </div>
