@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from "@material-ui/core/TextField";
+import SendIcon from '@material-ui/icons/Send';
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import PhoneInTalkIcon from '@material-ui/icons/PhoneInTalk';
 import Peer from 'peerjs';
+import "../App.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,9 +52,6 @@ const start = (localId, remoteId) => {
 function DataChat()  {
 
     //State
-    const [startAvailable, setStart] = React.useState(true)
-    const [sendAvailable, setSend] = React.useState(false)
-    const [hangupAvailable, setHangup] = React.useState(false)
     const [localId, setLocalId] = React.useState(0);
     const [remoteId, setRemoteId] = React.useState(0);
     const [message, setMessage] = React.useState(0);
@@ -76,33 +76,30 @@ function DataChat()  {
 
 
     return (
-        // TODO rajouter les champs textes correspondants
-        
-        // Vous pouvez utiliser des TextField de material-UI
-        // Et une Grid plutôt que des div pour la mise en page
-        <div className={classes.root}>
+        <div className={classes.root} id="App">
             <Grid container spacing={3}>       
-                <Grid item xs={3}>
+                <Grid item xs={4}>
                     <form className={classes.root} noValidate autoComplete="off">
                         <TextField id="standard-basic" label="Local id" onChange={(event) => setLocalId(event.target.value)} /> <br/>
-                        <Button onClick={initStart}>Start</Button>
+                        <Button onClick={initStart}>Start <ChatBubbleOutlineIcon fontSize="small"/> </Button>
                     </form>
                 </Grid>     
-                <Grid item xs={3}>
+                <Grid item xs={4}>
                     <form className={classes.root} noValidate autoComplete="off">
                         <TextField id="standard-basic" label="Remote chat id" onChange={(event) => setRemoteId(event.target.value)} /> <br/>
-                        <Button>Call</Button>
+                        <Button>Call <PhoneInTalkIcon/> </Button>
                     </form>
                 </Grid>     
-                <Grid item xs={3}>
+                {/* <Grid item xs={3}>
                     <Button>Hang up</Button>
-                </Grid>  
-                <Grid>
+                </Grid>   */}
+                <Grid item xs={4}>
                 <TextField id="standard-basic" label="Message" onChange={(event) => setMessage(event.target.value)} /> <br/>
-                    <Button onClick={send}>Send</Button>
+                    <Button onClick={send}>Send <SendIcon/> </Button>
                 </Grid>   
                 <Grid item xs={12}>
-                    <textarea id={"chat"} readOnly/> 
+                    <h3> Chat : </h3>
+                    <textarea id={"chat"} rows={32} readOnly/> 
                 </Grid>
           </Grid>
         </div>
